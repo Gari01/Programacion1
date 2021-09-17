@@ -14,12 +14,12 @@ using namespace std;
 int main() {
     int numero, numero2;
 
-    cout << "Escriba un entero: ";
+    cout << "Escriba dos números enteros separados por un espacio: ";
     cin >> numero;
-    cout << "Escriba otro entero: " ; 
     cin >> numero2;
+
     
-    
+
     cout << "La suma es " << numero + numero2 << endl;
 
     return 0;
