@@ -12,12 +12,15 @@ using namespace std;
  * Programa que solicita un número entero al usuario y lo escribe en pantalla.
  */
 int main() {
-    cout << "Escriba un entero: " << endl;
-    cout << "Escriba otro entero: " ; 
-
     int numero, numero2;
+
+    cout << "Escriba un entero: ";
     cin >> numero;
+    cout << "Escriba otro entero: " ; 
     cin >> numero2;
+    
+    
+    
     
     cout << "La suma es " << numero + numero2 << endl;
 
