@@ -20,8 +20,6 @@ int main() {
     cin >> numero2;
     
     
-    
-    
     cout << "La suma es " << numero + numero2 << endl;
 
     return 0;
