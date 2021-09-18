@@ -14,7 +14,7 @@ using namespace std;
 int main() {
     int numero, numero2;
 
-    cout << "Escriba dos números enteros separados por un espacio: ";
+    cout << "Escriba dos números enteros separados por un espacio: "; //solicito los numeros
     cin >> numero;
     cin >> numero2;
 
