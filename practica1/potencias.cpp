@@ -1,11 +1,12 @@
 /*******************************************************************************
  * Curso de Programación 1. Práctica 1
  * Autores: Miguel Ángel Latre y Javier Martínez
- * Modificado por: ¡PON AQUÍ TU NOMBRE!
+ * Modificado por: Gari Arellano Zubía
  * Última revisión: 18 de septiembre de 2021
  * Resumen: Tarea 5
  ******************************************************************************/
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 /*
@@ -24,8 +25,9 @@ using namespace std;
  * 
  */
 int main() {   
-    cout << "x" << "x^2" << "x^3" << endl;
-    cout << "===" << "===" << "===" << endl;
+
+    cout << setw(5) << "X" << setw(5) << "x^2" << setw(5) << "x^3" << endl <<
+    setw(5) << "===" << setw(5)<< "===" <<setw(5) << "===" << endl;
 
     // La instrucción que aparece a continuación es una «instrucción iterativa
     // indexada» o bucle «for» que veremos con detalle en el tema 5. Mientras
@@ -37,7 +39,7 @@ int main() {
     // sucesivamente irá incrementando su valor hasta que en la 24ª y última
     // iteración, x valdrá 24.
     for (int x = 1; x <= 24; x++) {
-        cout << x << x * x << x * x * x << endl;
+        cout << setw(5)<< x << setw(5)<< x * x << setw(5)<< x * x * x << endl;
     }
 
     return 0;

@@ -1,12 +1,13 @@
 /*******************************************************************************
  * Curso de Programación 1. Práctica 1
  * Autores: Miguel Ángel Latre y Javier Martínez
- * Modificado por: ¡PON AQUÍ TU NOMBRE!
+ * Modificado por: Gari Arellano Zubía
  * Última revisión: 18 de septiembre de 2021
  * Resumen: Tarea 6
  ******************************************************************************/
 #include <iostream>
 #include <cmath>
+#include <iomanip>
 using namespace std;
 
 /*
@@ -26,10 +27,10 @@ using namespace std;
  */
 int main() {
     const int ANCHO = 9;
-    cout << "Grados" << "Radianes" << "Seno" << "Coseno"
+    cout << setw(10)<< "Grados" << setw(10)<<"Radianes" << setw(10)<<"Seno" << setw(10)<<"Coseno"
          << endl;
 
-    cout << "========" << "========" << "========" << "========" << endl;
+    cout << setw(10)<< "========" << setw(10)<< "========" << setw(10)<< "========" << setw(10)<< "========" << endl;
 
     // La instrucción que aparece a continuación es una «instrucción iterativa
     // indexada» o bucle «for» que veremos con detalle en el tema 5. Mientras
@@ -42,7 +43,8 @@ int main() {
     // iteración, grados valdrá 180.
     for (double grados = 0; grados <= 180; grados += 10) {
         double radianes = M_PI * grados / 180.0;
-        cout << grados << radianes << sin(radianes) << cos(radianes) << endl;
+        cout << setw(10) << setprecision(0) << grados;
+        cout << setw(10) << fixed << setprecision(4) << radianes << setw(10) << sin(radianes) << setw(10) <<cos(radianes) << endl;
     }
 
     return 0;
