@@ -24,10 +24,12 @@ using namespace std;
  *      24    576  13824
  * 
  */
-int main() {   
+int main() { 
 
-    cout << setw(5) << "X" << setw(5) << "x^2" << setw(5) << "x^3" << endl <<
-    setw(5) << "===" << setw(5)<< "===" <<setw(5) << "===" << endl;
+    const int ANCHO = 7;  
+
+    cout << setw(ANCHO) << "X" << setw(ANCHO) << "x^2" << setw(ANCHO) << "x^3" << endl <<
+    setw(ANCHO) << "===" << setw(ANCHO)<< "===" << setw(ANCHO) << "===" << endl;
 
     // La instrucción que aparece a continuación es una «instrucción iterativa
     // indexada» o bucle «for» que veremos con detalle en el tema 5. Mientras
@@ -39,7 +41,7 @@ int main() {
     // sucesivamente irá incrementando su valor hasta que en la 24ª y última
     // iteración, x valdrá 24.
     for (int x = 1; x <= 24; x++) {
-        cout << setw(5)<< x << setw(5)<< x * x << setw(5)<< x * x * x << endl;
+        cout << setw(ANCHO)<< x << setw(ANCHO)<< x * x << setw(ANCHO)<< x * x * x << endl;
     }
 
     return 0;
