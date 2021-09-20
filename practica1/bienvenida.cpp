@@ -4,6 +4,7 @@
  *  Modificado por: Gari Arellano Zubía
  * Última revisión: 14 de septiembre de 2021
  * Resumen: Programa que escribe un mensaje de bienvenida (versión 1)
+ * 
  ***********************************************************************************/
 #include <iostream>
 
