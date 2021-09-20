@@ -40,7 +40,7 @@ int main() {
     // La primera vez que se ejecute (1ª iteración), grados habrá tomado el
     // valor 0, la segunda vez que se ejecute, grados valdrá 10 y así
     // sucesivamente irá aumentando su valor de 10 en 10 hasta que en la última
-    // iteración, grados valdrá 180.
+    // iteración, grados valdrá 180
     for (double grados = 0; grados <= 180; grados += 10) {
         double radianes = M_PI * grados / 180.0;
         cout << setw(ANCHO) << setprecision(0) << grados;
