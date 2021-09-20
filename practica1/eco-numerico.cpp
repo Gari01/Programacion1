@@ -21,7 +21,7 @@ int main() {
 
     
 
-    cout << "La suma es: " << numero + numero2 << endl;
+    cout << "Su suma es: " << numero + numero2 << endl;
 
     return 0;
 }
