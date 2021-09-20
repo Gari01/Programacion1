@@ -27,10 +27,10 @@ using namespace std;
  */
 int main() {
     const int ANCHO = 9;
-    cout << setw(10)<< "Grados" << setw(10)<<"Radianes" << setw(10)<<"Seno" << setw(10)<<"Coseno"
+    cout << setw(10) << "Grados" << setw(10) << "Radianes" << setw(10) << "Seno" << setw(10) << "Coseno"
          << endl;
 
-    cout << setw(10)<< "========" << setw(10)<< "========" << setw(10)<< "========" << setw(10)<< "========" << endl;
+    cout << setw(10) << "========" << setw(10) << "========" << setw(10) << "========" << setw(10) << "========" << endl;
 
     // La instrucción que aparece a continuación es una «instrucción iterativa
     // indexada» o bucle «for» que veremos con detalle en el tema 5. Mientras
