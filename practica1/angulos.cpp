@@ -27,10 +27,10 @@ using namespace std;
  */
 int main() {
     const int ANCHO = 9;
-    cout << setw(10) << "Grados" << setw(10) << "Radianes" << setw(10) << "Seno" << setw(10) << "Coseno"
+    cout << setw(ANCHO) << "Grados" << setw(ANCHO) << "Radianes" << setw(ANCHO) << "Seno" << setw(ANCHO) << "Coseno"
          << endl;
 
-    cout << setw(10) << "========" << setw(10) << "========" << setw(10) << "========" << setw(10) << "========" << endl;
+    cout << setw(ANCHO) << "========" << setw(ANCHO) << "========" << setw(ANCHO) << "========" << setw(ANCHO) << "========" << endl;
 
     // La instrucción que aparece a continuación es una «instrucción iterativa
     // indexada» o bucle «for» que veremos con detalle en el tema 5. Mientras
@@ -43,8 +43,8 @@ int main() {
     // iteración, grados valdrá 180.
     for (double grados = 0; grados <= 180; grados += 10) {
         double radianes = M_PI * grados / 180.0;
-        cout << setw(10) << setprecision(0) << grados;
-        cout << setw(10) << fixed << setprecision(4) << radianes << setw(10) << sin(radianes) << setw(10) <<cos(radianes) << endl;
+        cout << setw(ANCHO) << setprecision(0) << grados;
+        cout << setw(ANCHO) << fixed << setprecision(4) << radianes << setw(ANCHO) << sin(radianes) << setw(ANCHO) <<cos(radianes) << endl;
     }
 
     return 0;
