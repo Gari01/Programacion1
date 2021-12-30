@@ -6,9 +6,9 @@
 \******************************************************************************/
 
 #include <fstream>
+#include <iostream>
 #include "fecha.hpp"
 #include "gasto-diario.hpp"
-#pragma once
 using namespace std;
 
 const string RUTA_DATOS = "datos/";
@@ -75,6 +75,7 @@ bool leerConsumoHorario(istream& f, Fecha& fecha, unsigned& hora, double& consum
         f >> fecha.agno;
         f.get(); // Elimino el / 
         f >> hora;
+        hora -=1;
         f.get(); // Elimino el ;
         f >> consumo;
         getline(f,basura);
@@ -98,7 +99,7 @@ bool leerConsumoHorario(istream& f, Fecha& fecha, unsigned& hora, double& consum
  *       «nombreFichero» correctamente, y «false» en caso contrario.
  */
 bool leerPrecios(const string nombreFichero, const unsigned mesInicial, const unsigned mesFinal, GastoDiario registros[]){
-    fstream f(nombreFichero);
+    ifstream f(RUTA_DATOS+nombreFichero);
     if (f.is_open())
     {
         string basura;
@@ -106,15 +107,20 @@ bool leerPrecios(const string nombreFichero, const unsigned mesInicial, const un
         Fecha fechaLeida;
         double coste;
         unsigned hora;
+        getline(f,basura);
         while (leerPrecioHorario(f,fechaLeida,hora,coste))
         {
             if (fechaLeida.mes >= mesInicial && fechaLeida.mes <= mesFinal)
             {
                 unsigned indice = diasTranscurridos(fechaini,fechaLeida);
-                registros[indice].precioDia[hora] = coste;
+                registros[indice].precioDia[hora] = coste/1000;
+                registros[indice].fecha = fechaLeida;
             }
         }
+        f.close();
         return true;
+    } else {
+        cout << "Error al leer el archivo "+nombreFichero;
     }
     return false;
 }
@@ -135,6 +141,44 @@ bool leerPrecios(const string nombreFichero, const unsigned mesInicial, const un
  *       referidos en la precondición correctamente, y «false» en caso contrario.
  */
 bool leerConsumos(const string nombreCliente, const unsigned mesInicial, const unsigned mesFinal, GastoDiario registros[]){
-    
+    string nombreFich = "-2021-";
+    string extensionFich = ".csv";
+    unsigned hora;
+    double coste;
+    Fecha fechaLeida;
+    Fecha fechaini = {1,mesInicial,2021};
+    bool flag = 0;
+    unsigned i = mesInicial;
+    string basura;
+    while (i <= mesFinal && flag == 0)
+    {
+        if (i < 10)
+        {
+            nombreFich = "-2021-0";
+        } else {
+            nombreFich = "-2021-";
+        }
+        ifstream f{RUTA_DATOS+nombreCliente+nombreFich+to_string(i)+extensionFich};
+        if (f.is_open())
+        {
+            getline(f,basura); // Eliminamos la primera linea
+            while (leerConsumoHorario(f,fechaLeida,hora,coste))
+            {
+                unsigned indice = diasTranscurridos(fechaini,fechaLeida);
+                registros[indice].consElect[hora] = coste/1000;
+                registros[indice].fecha = fechaLeida;
+            }
+            f.close();
+        } else {
+            flag = 1;
+        }
+        i++;
+    }
+    if (flag == 1)
+    {
+        cout << "Error al leer el archivo "+ nombreCliente+nombreFich+extensionFich;
+        return false;
+    }
+    return true;
 }
 

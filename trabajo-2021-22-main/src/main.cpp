@@ -26,6 +26,7 @@
 #include "tarifas-comerciales.hpp"
 #include "fecha.hpp"
 using namespace std;
+const unsigned diasMaxAgno = 366;
 
 
 /*
@@ -63,12 +64,45 @@ void pedirDatos(string& usuario, unsigned& mesIni, unsigned& mesFinal){
         }
     } while (mesIni > mesFinal || mesIni < 1 || mesIni > 11 || mesFinal < 1 || mesFinal > 11);
 }
+void pedirFich(string& nombreFich){
+    cout << "Escriba el nombre del fichero del informe" << endl;
+    cout << "(presione solo ENTRAR para escribirlo en la pantalla): ";
+    char enter;
+    cin.ignore();
+    cin.get(enter);
+    if ( enter == '\n')
+    {
+        cout << "Hola";
+    } else {
+        cin >> nombreFich;
+        nombreFich = enter+nombreFich;
+        // Escribir en un fichero.
+    }
+}
+
+void escribirEnPantalla (const unsigned& mesIni, const unsigned& mesFinal, const string& usuario, GastoDiario regsDiarios[diasMaxAgno]){
+    cout << endl << endl << "INFORME DEL CLIENTE " << usuario << " ENTRE LOS MESES " << mesIni << " Y " << mesFinal << " DE 2021" << endl;
+    cout << "-------------------------------------------------------------------------------------" << endl;
+    double precioMinimo;
+    Fecha fecha;
+    unsigned numregs = diasTranscurridos({1,mesIni,2021},{1,mesFinal+1,2021}); // Hay que crear constante de año.
+    diaMasBarato(regsDiarios,numregs,fecha,precioMinimo);
+    cout << "El día completo más barato fue el " << fecha.dia << "-" << fecha.mes << "-2021" << " . Precio medio: " << precioMinimo << " €/kWh";
+}
 /*
  * ¡ESCRIBID LA ESPECIFICACIÓN DE ESTA FUNCIÓN!
  */
 int main() {
-    string usuarios;
+    string usuario;
     unsigned mesIni;
     unsigned mesFinal;
+    string nombreFich;
+    GastoDiario regsDiarios[diasMaxAgno];
+    pedirDatos(usuario, mesIni, mesFinal);
+    pedirFich(nombreFich);
+    string fichero = "tarifas-2021-ene-nov.csv";
+    leerPrecios(fichero,mesIni,mesFinal,regsDiarios);
+    leerConsumos(usuario,mesIni,mesFinal, regsDiarios);
+    escribirEnPantalla(mesIni, mesFinal, usuario,regsDiarios);
     return 0;
 }
