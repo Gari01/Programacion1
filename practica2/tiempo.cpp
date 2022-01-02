@@ -5,7 +5,10 @@
  ******************************************************************************/
 #include <iostream>
 #include <math.h> 
-#include <wchar.h>
+
+/* 
+Programa que solicita por teclado una cantidad de segundos y devuelve a cuantos dias, hora, minutos y segundos equivalen.
+*/
 
 
 
@@ -28,20 +31,18 @@ int main() {
     cout << "Duración en segundos: " << bold << underline;
     cin >> segundos;
 
-    while(segundos > 59) { // Realizo un bucle hasta que los segundos sean un numero mayor que 59.
-        if(segundos >= 86400){ // Cada vez que entre en un If incremento en uno los contados asignados.
-            segundos = segundos - 86400;
-            dias++;
-        }else if(segundos >= 3600){
-                    segundos = segundos - 3600;
-                     horas++;
-            } else if(segundos >= 60){
-                        segundos = segundos - 60;
-                        minutos++;
-                    }
+    if(segundos < 0) {
+        cout << reset << "Datos incorrectos";
+        return 1;
+    } else {
+        dias = segundos/86400;
+        horas = (segundos%86400)/3600;
+        minutos = ((segundos%86400)%3600)/60;
+        segundos = ((segundos%86400)%3600)%60;
+        cout << reset << "Este tiempo equivale a " << dias << " dias " << horas << " horas " << minutos << " minutos " << segundos << " segundos.";
     }
     
-    cout << reset << "Este tiempo equivale a " << dias << " dias " << horas << " horas " << minutos << " minutos " << segundos << " segundos.";
+    
     
     return 0;
 }

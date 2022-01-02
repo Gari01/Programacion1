@@ -22,36 +22,28 @@ using namespace std;
 int main() {
 
     unsigned int dinero;
-    int acumulador10 = 0;
-    int acumulador20 = 0;
-    int acumulador50 = 0;
+    int billetesDe50 = 0;
+    int billetesDe20 = 0;
+    int billetesDe10 = 0;
     int ancho = 7;
 
     cout << "Cantidad a retirar en euros [positiva y múltiplo de 10]: "<< bold << underline;
     cin >> dinero;
-
-    if(dinero < 0) {
-        cout << "Datos erroneos";
+    if(dinero < 0 || dinero%10 !=0 || dinero>600) {
+        cout << reset << "Datos erroneos";
+        return 1;
     } else {
-        while (dinero >= 10) {
-            if(dinero >= 50) {
-                dinero = dinero - 50;
-                acumulador50++;
-            } else if (dinero >= 20) {
-                        dinero = dinero - 20;
-                        acumulador20++;
-                    } else if (dinero >= 10) {
-                                dinero = dinero - 10;
-                                acumulador10++;
-                            }
-        }
+        billetesDe50 = dinero/50;
+        billetesDe20 = (dinero%50)/20;
+        billetesDe10 = ((dinero%50)%20)/10;
+
+        cout << reset << setw(ancho) << "Billetes" << setw(ancho) << "Euros" << endl 
+        << setw(ancho) << "========" << setw(ancho) << "=====" << endl 
+        << setw(ancho) << billetesDe10 << setw(ancho) << "10" << endl
+        << setw(ancho) << billetesDe20 << setw(ancho) << "20" << endl
+        << setw(ancho) << billetesDe50 << setw(ancho) << "50" << endl;
     }
     
-    cout << reset << setw(ancho) << "Billetes" << setw(ancho) << "Euros" << endl 
-    << setw(ancho) << "========" << setw(ancho) << "=====" << endl 
-    << setw(ancho) << acumulador10 << setw(ancho) << "10" << endl
-    << setw(ancho) << acumulador20 << setw(ancho) << "20" << endl
-    << setw(ancho) << acumulador50 << setw(ancho) << "50" << endl;
-
     return 0;
 }
+
