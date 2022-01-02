@@ -15,9 +15,21 @@ using namespace std;
  *       de precios horarios del registro «gasto» fue más cara.
  */
 unsigned horaMasCara(const GastoDiario& gasto){
+    unsigned indice = 0;
+    for (unsigned i = 1; i < NUM_HORAS; i++) 
+    {
+        if (gasto.precioDia[indice] < gasto.precioDia[i])
+        {
+            indice = i;
+        }
+    }
+    return indice; 
+}
+
+/*unsigned horaMasCara(const GastoDiario& gasto){
     unsigned maxPrecio;
-    unsigned indice;
-    maxPrecio = gasto.precioDia[0];
+    unsigned indice = 0;
+    maxPrecio = gasto.precioDia[indice];
     for (unsigned i = 1; i < NUM_HORAS; i++) // En la componente 0, esta la hora 1, por lo tanto en la componente 23, la hora 24
     {
         if (maxPrecio < gasto.precioDia[i])
@@ -26,9 +38,8 @@ unsigned horaMasCara(const GastoDiario& gasto){
             indice = i;
         }
     }
-    return indice + 1; // Como ya hemos especificado antes, hay que sumar uno al indice.
-}
-
+    return indice; // Como ya hemos especificado antes, hay que sumar uno al indice.
+}*/
 
 /*
  * Pre:  ---
@@ -68,13 +79,12 @@ double costeDiario(const GastoDiario& gasto){
  *       en la hora con el precio más barato del registro «gasto».
  */
 double costeDiarioMinimo(const GastoDiario& gasto){
-    double costeMin = gasto.precioDia[0]; // Inicializamos la variable, para dar una vuelta menos en el bucle.
-    unsigned indice;
+    double costeMin = 0; // Inicializamos la variable, para dar una vuelta menos en el bucle.
+    unsigned indice = 0;
     for (unsigned i = 1; i < NUM_HORAS; i++) // Localizamos cual es el indice correpondiente a la hora mas barata.
     {
-        if (costeMin > gasto.precioDia[i])
+        if (gasto.precioDia[indice] > gasto.precioDia[i])
         {
-            costeMin = gasto.precioDia[i];
             indice = i;
         }
     }

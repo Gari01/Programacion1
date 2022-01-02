@@ -1,3 +1,9 @@
+/******************************************************************************\
+ * Curso de Programación 1. Tema 11 (Registros) y trabajo obligatorio 2021-22
+ * Autores: Gari Arellano y Alain Cascán
+ * Última revisión: 2 de Enero de 2022
+ * Resumen: Fichero de implementación «tarifas-comerciales.cpp» del módulo «tarifas-comerciales».
+\******************************************************************************/
 #include <string>
 #include "gasto-diario.hpp"
 #include "tarifas-comerciales.hpp"
@@ -14,10 +20,10 @@ double costeDiarioTarifaPlanaTramos(const GastoDiario& gasto, const TarifaPlanaT
     double coste = 0;
     for (unsigned i = 0; i < NUM_HORAS; i++)
     {
-        if ( (i >=11 &&  i <= 14 ) || (i >= 19 && i <= 22) ) // Como en nuestro vector gasto, la componente 0 era la hora 1, tenemos que sumar 1.
+        if ( (i >=10 &&  i <= 13 ) || (i >= 18 && i <= 21) )
         {
             coste += gasto.consElect[i] * tarifa.punta;
-        } else if ((i >=9 &&  i <= 10 ) || (i >= 15 && i <= 18)) 
+        } else if ((i >=8 &&  i <= 9 ) || (i >= 14 && i <= 17) || (i >= 20 && i <= 23)) 
         {
             coste += gasto.consElect[i] * tarifa.llano;
         } else {
@@ -42,5 +48,5 @@ double costeTarifaPlanaTramos(const GastoDiario regDiario[], const unsigned numR
     {
         coste += costeDiarioTarifaPlanaTramos(regDiario[i],tarifa);
     }
-    return coste;
+    return coste * 1000;
 }

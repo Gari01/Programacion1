@@ -1,7 +1,7 @@
 /******************************************************************************\
  * Programación 1. Trabajo obligatorio curso 2021-22
  * Autores: Gari Arellano y Alain Cascán
- * Ultima revisión: ¡¡¡!!!
+ * Ultima revisión: 2 de Enero de 2022
  * Resumen: ¡¡¡!!!
  * Nota: El código de este programa está repartido en varios módulos.
  *       Para compilarlo, hay que ejecutar el comando
@@ -26,7 +26,6 @@
 #include "tarifas-comerciales.hpp"
 #include "fecha.hpp"
 using namespace std;
-const unsigned diasMaxAgno = 366;
 
 
 /*
@@ -40,7 +39,29 @@ const unsigned diasMaxAgno = 366;
  */
 void escribirInforme(ostream& f, const GastoDiario regDiarios[], const unsigned numRegs, const string nombreCliente, const unsigned mesInicial, 
                     const unsigned mesFinal) {
-    
+    f << endl << endl << "INFORME DEL CLIENTE " << nombreCliente << " ENTRE LOS MESES " << mesInicial << " Y " << mesFinal << " DE " << AGNO_ACTUAL << endl;
+    f << "-------------------------------------------------------------------------------------" << endl;
+    double precio;
+    Fecha fecha;
+    diaMasBarato(regDiarios, numRegs, fecha, precio);
+    f << "El día completo más barato fue el " << fecha.dia << "-" << fecha.mes << "-" << AGNO_ACTUAL << ". Precio medio: " << precio << " €/kWh"<< endl;
+    unsigned hora;
+    horaMasCara(regDiarios, numRegs, fecha, hora, precio);
+    f << "La hora más cara tuvo lugar el " << fecha.dia << "-" << fecha.mes << "-" << AGNO_ACTUAL << " a las " << hora << ":00. Precio: " << precio << " €/kWh"; 
+    f << endl << endl;
+    f << "El importe del consumo eléctrico en el periodo considerado ha sido de " << costeTerminoVariable(regDiarios,numRegs) << "€." << endl;
+    f << "El importe mínimo concentrando todo el consumo diario en la hora más barata " << endl << "habría sido de "; 
+    f << costeMinimoPosible(regDiarios,numRegs) << "€ ";
+    f << "(un "<< 100 - (costeMinimoPosible(regDiarios,numRegs) * 100) / costeTerminoVariable(regDiarios,numRegs)<< " % menor)" << endl;
+    f << "COSTE CON TARIFAS COMERCIALES" << endl;
+    f << "Coste "<<"Nombre de la tarifa" << endl;
+    f << "--------------------------------------------" << endl;
+    for (unsigned i = 0; i < NUM_TARIFAS_COMERCIALES; i++)
+    {
+       f << costeTarifaPlanaTramos(regDiarios,numRegs,TARIFAS_COMERCIALES[i]) << " €     "<< TARIFAS_COMERCIALES[i].nombre << endl; 
+    }
+
+
 }
 
 void pedirDatos(string& usuario, unsigned& mesIni, unsigned& mesFinal){
@@ -64,31 +85,46 @@ void pedirDatos(string& usuario, unsigned& mesIni, unsigned& mesFinal){
         }
     } while (mesIni > mesFinal || mesIni < 1 || mesIni > 11 || mesFinal < 1 || mesFinal > 11);
 }
-void pedirFich(string& nombreFich){
+
+bool pedirFich(string& nombreFich){
     cout << "Escriba el nombre del fichero del informe" << endl;
     cout << "(presione solo ENTRAR para escribirlo en la pantalla): ";
     char enter;
     cin.ignore();
     cin.get(enter);
-    if ( enter == '\n')
+    if (enter != '\n')
     {
-        cout << "Hola";
-    } else {
         cin >> nombreFich;
         nombreFich = enter+nombreFich;
-        // Escribir en un fichero.
+        return true;
     }
+    return false;
 }
 
-void escribirEnPantalla (const unsigned& mesIni, const unsigned& mesFinal, const string& usuario, GastoDiario regsDiarios[diasMaxAgno]){
-    cout << endl << endl << "INFORME DEL CLIENTE " << usuario << " ENTRE LOS MESES " << mesIni << " Y " << mesFinal << " DE 2021" << endl;
+void escribirEnPantalla (const unsigned& mesIni, const unsigned& mesFinal, const string& usuario, GastoDiario regsDiarios[MAX_DIAS], unsigned numregs){
+    cout << endl << endl << "INFORME DEL CLIENTE " << usuario << " ENTRE LOS MESES " << mesIni << " Y " << mesFinal << " DE " << AGNO_ACTUAL << endl;
     cout << "-------------------------------------------------------------------------------------" << endl;
-    double precioMinimo;
+    double precio;
     Fecha fecha;
-    unsigned numregs = diasTranscurridos({1,mesIni,2021},{1,mesFinal+1,2021}); // Hay que crear constante de año.
-    diaMasBarato(regsDiarios,numregs,fecha,precioMinimo);
-    cout << "El día completo más barato fue el " << fecha.dia << "-" << fecha.mes << "-2021" << " . Precio medio: " << precioMinimo << " €/kWh";
-}
+    diaMasBarato(regsDiarios, numregs, fecha, precio);
+    cout << "El día completo más barato fue el " << fecha.dia << "-" << fecha.mes << "-" << AGNO_ACTUAL << ". Precio medio: " << precio << " €/kWh"<< endl;
+    unsigned hora;
+    horaMasCara(regsDiarios, numregs, fecha, hora, precio);
+    cout << "La hora más cara tuvo lugar el " << fecha.dia << "-" << fecha.mes << "-" << AGNO_ACTUAL << " a las " << hora << ":00. Precio: " << precio << " €/kWh"; 
+    cout << endl << endl;
+    cout << "El importe del consumo eléctrico en el periodo considerado ha sido de " << costeTerminoVariable(regsDiarios,numregs) << "€." << endl;
+    cout << "El importe mínimo concentrando todo el consumo diario en la hora más barata " << endl << "habría sido de "; 
+    cout << costeMinimoPosible(regsDiarios,numregs) << "€ ";
+    cout << "(un "<< 100 - (costeMinimoPosible(regsDiarios,numregs) * 100) / costeTerminoVariable(regsDiarios,numregs)<< " % menor)" << endl;
+    cout << "COSTE CON TARIFAS COMERCIALES" << endl;
+    cout << "Coste "<<"Nombre de la tarifa" << endl;
+    cout << "--------------------------------------------" << endl;
+    for (unsigned i = 0; i < NUM_TARIFAS_COMERCIALES; i++)
+    {
+       cout << costeTarifaPlanaTramos(regsDiarios,numregs,TARIFAS_COMERCIALES[i]) << " €     "<< TARIFAS_COMERCIALES[i].nombre << endl; 
+    }
+     
+ }
 /*
  * ¡ESCRIBID LA ESPECIFICACIÓN DE ESTA FUNCIÓN!
  */
@@ -96,13 +132,27 @@ int main() {
     string usuario;
     unsigned mesIni;
     unsigned mesFinal;
+    unsigned numregs;
     string nombreFich;
-    GastoDiario regsDiarios[diasMaxAgno];
-    pedirDatos(usuario, mesIni, mesFinal);
-    pedirFich(nombreFich);
     string fichero = "tarifas-2021-ene-nov.csv";
+    GastoDiario regsDiarios[MAX_DIAS];
+    pedirDatos(usuario, mesIni, mesFinal);
+    numregs = diasTranscurridos({1,mesIni,AGNO_ACTUAL},{1,mesFinal+1,AGNO_ACTUAL});
     leerPrecios(fichero,mesIni,mesFinal,regsDiarios);
     leerConsumos(usuario,mesIni,mesFinal, regsDiarios);
-    escribirEnPantalla(mesIni, mesFinal, usuario,regsDiarios);
+    pedirFich(nombreFich);
+    
+        //ofstream f{RUTA_DATOS+nombreFich};
+        ofstream f;
+        //if (f.is_open())
+       //{
+            escribirInforme(f,regsDiarios,numregs,usuario,mesIni,mesFinal);
+            f.close();
+       /*} else {
+            cout << "Error al crear el archivo " << nombreFich;
+        }
+        
+    } else {
+        escribirEnPantalla(mesIni, mesFinal, usuario, regsDiarios, numregs);*/
     return 0;
 }

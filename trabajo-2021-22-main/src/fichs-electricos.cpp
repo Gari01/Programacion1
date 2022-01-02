@@ -103,7 +103,7 @@ bool leerPrecios(const string nombreFichero, const unsigned mesInicial, const un
     if (f.is_open())
     {
         string basura;
-        Fecha fechaini = {1,mesInicial,2021};
+        Fecha fechaini = {1,mesInicial,AGNO_ACTUAL};
         Fecha fechaLeida;
         double coste;
         unsigned hora;
@@ -120,7 +120,7 @@ bool leerPrecios(const string nombreFichero, const unsigned mesInicial, const un
         f.close();
         return true;
     } else {
-        cout << "Error al leer el archivo "+nombreFichero;
+        cout << "Error al leer el archivo "+nombreFichero << endl;
     }
     return false;
 }
@@ -141,12 +141,12 @@ bool leerPrecios(const string nombreFichero, const unsigned mesInicial, const un
  *       referidos en la precondición correctamente, y «false» en caso contrario.
  */
 bool leerConsumos(const string nombreCliente, const unsigned mesInicial, const unsigned mesFinal, GastoDiario registros[]){
-    string nombreFich = "-2021-";
+    string nombreFich = "-" + to_string(AGNO_ACTUAL) + "-";
     string extensionFich = ".csv";
     unsigned hora;
     double coste;
     Fecha fechaLeida;
-    Fecha fechaini = {1,mesInicial,2021};
+    Fecha fechaini = {1,mesInicial,AGNO_ACTUAL};
     bool flag = 0;
     unsigned i = mesInicial;
     string basura;
@@ -154,9 +154,9 @@ bool leerConsumos(const string nombreCliente, const unsigned mesInicial, const u
     {
         if (i < 10)
         {
-            nombreFich = "-2021-0";
+            nombreFich = "-"+ to_string(AGNO_ACTUAL) + "-0";
         } else {
-            nombreFich = "-2021-";
+            nombreFich = "-" + to_string(AGNO_ACTUAL) + "-";
         }
         ifstream f{RUTA_DATOS+nombreCliente+nombreFich+to_string(i)+extensionFich};
         if (f.is_open())
@@ -176,7 +176,7 @@ bool leerConsumos(const string nombreCliente, const unsigned mesInicial, const u
     }
     if (flag == 1)
     {
-        cout << "Error al leer el archivo "+ nombreCliente+nombreFich+extensionFich;
+        cout << "Error al leer el archivo "+ nombreCliente+nombreFich+extensionFich << endl;
         return false;
     }
     return true;

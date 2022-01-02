@@ -21,6 +21,7 @@ using namespace std;
  */
 void diaMasBarato(const GastoDiario regsDiarios[], const unsigned numRegs, Fecha& dia, double& precioMedioMinimo){
     precioMedioMinimo = costeMedio(regsDiarios[0]);
+    dia = regsDiarios[0].fecha;
     for (unsigned i = 1; i < numRegs; i++)
     {
         if (precioMedioMinimo > costeMedio(regsDiarios[i]))
@@ -43,16 +44,18 @@ void diaMasBarato(const GastoDiario regsDiarios[], const unsigned numRegs, Fecha
 void horaMasCara(const GastoDiario regsDiarios[], const unsigned numRegs, Fecha& dia, unsigned& hora, double& precioMaximo){
     hora = horaMasCara(regsDiarios[0]); // Inicializamos la variable fuera del bucle, para que no tenga que estar inicializando una nueva variable en memoria por cada iteración bucle.
     double precioActual;
+    unsigned horaActual;
     precioMaximo = regsDiarios[0].precioDia[hora];
     dia = regsDiarios[0].fecha;
     for (unsigned i = 1; i < numRegs; i++)
     {
-        hora = horaMasCara(regsDiarios[i]); // Guardamos el indice en una variable, para llamar a la función una sola vez por cada iteracion, en vez de dos.
-        precioActual = regsDiarios[i].precioDia[hora];
+        horaActual = horaMasCara(regsDiarios[i]); // Guardamos el indice en una variable, para llamar a la función una sola vez por cada iteracion, en vez de dos.
+        precioActual = regsDiarios[i].precioDia[horaActual];
         if (precioMaximo < precioActual)
         {
             precioMaximo = precioActual;
             dia = regsDiarios[i].fecha;
+            hora = horaActual;
         }
     }
 }
@@ -69,7 +72,7 @@ double costeTerminoVariable(const GastoDiario regsDiarios[], const unsigned numR
     {
         coste += costeDiario(regsDiarios[i]);
     }
-    return coste;
+    return coste*1000;
 }
 
 /*
@@ -87,5 +90,5 @@ double costeMinimoPosible(const GastoDiario regsDiarios[], const unsigned numReg
     {
         coste += costeDiarioMinimo(regsDiarios[i]);
     }
-    return coste;
+    return coste*1000;
 }
